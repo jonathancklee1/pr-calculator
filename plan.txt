@@ -1,0 +1,18 @@
+PR Calculator
+-PR calculator for gym goers who want to track their personal record for gym exercises.
+- Mobile responsive and focused
+
+Pages
+- Mini Dashboard
+    - Progression circle in the middle with a random recorded exercise that displays the current PR. GIF of exercise in the middle
+    - Progression circle is filled based on the percent of current PR to goal weight set.
+    - At bottom of circle, big plus button to redirect to add a new PR. 
+    - Below the progress is a list of all current PRs, with image, name and PR weight.
+    - The PR data should show one rep max number
+- List of all exercises
+    - Data from ExerciseDB
+    - List item is clickable to link to PR input
+- PR form
+    - Page to add new PR
+    - Contains exercise name, GIF of exercise, input for weight, reps and goal weight (prefilled if saved before), and save button.
+    - After saving, show confetti and congratulation toast, then after 500ms, redirect back to dashboard. 
