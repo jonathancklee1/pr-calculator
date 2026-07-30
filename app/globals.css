@@ -16,6 +16,7 @@
     --color-primary-text: #ccff00;
     --color-secondary-text: #f0f1f1;
     --color-tertiary-text: #1a1c1c;
+    --color-accent-text: #00d1ff;
     --color-primary-background: var(--primary-background);
     --color-secondary-background: var(--secondary-background);
 }
