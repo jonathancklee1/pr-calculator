@@ -2,10 +2,20 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+:root {
+    --primary-background: #1a1c1c;
+    --secondary-background: #ccff00;
+    --tertiary-color: #f0f1f1;
+}
+
 @theme {
     --primary-color: #ccff00;
     --secondary-color: #00d1ff;
-    --tertiary-color: #ffffff;
+    --tertiary-color: #f0f1f1;
     --neutral-color: #0a0a0a;
     --color-primary-text: #ccff00;
+    --color-secondary-text: #f0f1f1;
+    --color-tertiary-text: #1a1c1c;
+    --color-primary-background: var(--primary-background);
+    --color-secondary-background: var(--secondary-background);
 }
