@@ -20,9 +20,11 @@ const chartConfig = {
 export function RadialProgressChart({
     currentPR = 60,
     goal = 90,
+    label,
 }: {
     currentPR?: number;
     goal?: number;
+    label?: string;
 }) {
     const chartData = [
         {
@@ -74,7 +76,7 @@ export function RadialProgressChart({
                                             textLength="200"
                                             lengthAdjust="spacingAndGlyphs"
                                         >
-                                            Flat Bench Press
+                                            {label}
                                         </tspan>
                                         <tspan
                                             x={viewBox.cx}
