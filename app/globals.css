@@ -5,6 +5,7 @@
 :root {
     --primary-background: #1a1c1c;
     --secondary-background: #ccff00;
+    --secondary-background-hover: #daff6e;
     --tertiary-color: #f0f1f1;
 }
 
@@ -16,6 +17,12 @@
     --color-primary-text: #ccff00;
     --color-secondary-text: #f0f1f1;
     --color-tertiary-text: #1a1c1c;
+    --color-accent-text: #00d1ff;
     --color-primary-background: var(--primary-background);
     --color-secondary-background: var(--secondary-background);
+    --color-secondary-background-hover: var(--secondary-background-hover);
+}
+
+nav {
+    z-index: 1000;
 }
