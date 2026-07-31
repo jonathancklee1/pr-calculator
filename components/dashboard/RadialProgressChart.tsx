@@ -2,62 +2,62 @@
 
 import {
     Label,
-    PolarGrid,
+    PolarAngleAxis,
     PolarRadiusAxis,
     RadialBar,
     RadialBarChart,
 } from "recharts";
 
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
-import Image from "next/image";
-
-const chartData = [
-    {
-        browser: "desktop",
-        exercise: 90,
-        fill: "var(--secondary-background)",
-        color: "var(--secondary-background)",
-    },
-];
 
 const chartConfig = {
     exercise: {
         label: "Exercise",
         color: "var(--color-exercise)",
     },
-    desktop: {
-        label: "Desktop",
-        color: "var(--color-desktop)",
-    },
-    mobile: {
-        label: "Mobile",
-        color: "#60a5fa",
-    },
 } satisfies ChartConfig;
 
-export function RadialProgressChart({ goal = 100 }: { goal?: number }) {
-    const endAngle = (chartData[0].exercise / goal) * 360;
+export function RadialProgressChart({
+    currentPR = 60,
+    goal = 90,
+}: {
+    currentPR?: number;
+    goal?: number;
+}) {
+    const chartData = [
+        {
+            browser: "desktop",
+            exercise: currentPR,
+            color: "var(--secondary-background)",
+        },
+    ];
+
     return (
         <ChartContainer
             config={chartConfig}
-            className="mx-auto aspect-square w-full max-h-80"
+            className="mx-auto aspect-square w-full max-h-80 overflow-visible"
         >
             <RadialBarChart
                 data={chartData}
-                startAngle={0}
-                endAngle={endAngle}
+                startAngle={90}
+                endAngle={450}
                 outerRadius={140}
                 innerRadius={120}
             >
-                <RadialBar dataKey="exercise" background cornerRadius={10} />
+                <RadialBar
+                    dataKey="exercise"
+                    cornerRadius={10}
+                    fill="var(--secondary-background)"
+                    background={{ fill: "#ffffff" }}
+                />
+                <PolarAngleAxis type="number" domain={[0, goal]} tick={false} />
                 <PolarRadiusAxis
                     tick={false}
                     tickLine={false}
                     axisLine={false}
-                    className=" max-w-2 overflow-hidden"
+                    className="max-w-2 overflow-hidden translate-y-10"
                 >
                     <Label
-                        className=" max-w-2 overflow-hidden"
                         content={({ viewBox }) => {
                             if (viewBox && "cx" in viewBox && "cy" in viewBox) {
                                 return (
@@ -70,7 +70,7 @@ export function RadialProgressChart({ goal = 100 }: { goal?: number }) {
                                         <tspan
                                             x={viewBox.cx}
                                             y={(viewBox.cy || 0) - 36}
-                                            className="fill-secondary-text text-2xl font-bold text-wrap "
+                                            className="fill-secondary-text text-2xl font-bold"
                                             textLength="200"
                                             lengthAdjust="spacingAndGlyphs"
                                         >
@@ -78,22 +78,8 @@ export function RadialProgressChart({ goal = 100 }: { goal?: number }) {
                                         </tspan>
                                         <tspan
                                             x={viewBox.cx}
-                                            y={(viewBox.cy || 0) - 36}
-                                            className="fill-secondary-text text-2xl font-bold"
-                                        >
-                                            <Image
-                                                src="https://images.pexels.com/photos/38247624/pexels-photo-38247624.jpeg"
-                                                alt="Flat Bench Press"
-                                                width={100}
-                                                height={100}
-                                                className="mx-auto my-2 rounded-full"
-                                            />
-                                        </tspan>
-
-                                        <tspan
-                                            x={viewBox.cx}
                                             y={viewBox.cy}
-                                            className="fill-secondary-text text-4xl font-bold "
+                                            className="fill-primary-text text-4xl font-bold "
                                         >
                                             {chartData[0].exercise}kg
                                         </tspan>
