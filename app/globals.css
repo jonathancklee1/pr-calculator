@@ -6,6 +6,7 @@
     --primary-background: #1a1c1c;
     --secondary-background: #ccff00;
     --secondary-background-hover: #daff6e;
+    --tertiary-background: #313030;
     --tertiary-color: #f0f1f1;
 }
 
@@ -21,6 +22,12 @@
     --color-primary-background: var(--primary-background);
     --color-secondary-background: var(--secondary-background);
     --color-secondary-background-hover: var(--secondary-background-hover);
+    --color-tertiary-background: var(--tertiary-background);
+}
+body {
+    background-color: var(--primary-background);
+    color: var(--tertiary-color);
+    font-family: "Inter", sans-serif;
 }
 
 nav {

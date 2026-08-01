@@ -33,7 +33,12 @@ function ProgressSection() {
                     label={exercise.name}
                 />
                 <IconButton
-                    icon={<Plus className="size-8" />}
+                    icon={
+                        <Plus
+                            className="size-8 text-tertiary-text"
+                            strokeWidth="2.5"
+                        />
+                    }
                     onClick={addNewExercise}
                     styles="absolute bottom-0 left-1/2 -translate-x-1/2"
                 />
