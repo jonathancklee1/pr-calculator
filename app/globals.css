@@ -8,6 +8,7 @@
     --secondary-background-hover: #daff6e;
     --tertiary-background: #313030;
     --tertiary-color: #f0f1f1;
+    --color-border-color: #909191;
 }
 
 @theme {
@@ -23,6 +24,7 @@
     --color-secondary-background: var(--secondary-background);
     --color-secondary-background-hover: var(--secondary-background-hover);
     --color-tertiary-background: var(--tertiary-background);
+    --color-border-color: var(--color-border-color);
 }
 body {
     background-color: var(--primary-background);

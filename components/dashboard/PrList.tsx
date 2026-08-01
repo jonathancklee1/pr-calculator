@@ -1,9 +1,9 @@
 import Card from "../atoms/Card";
 import Image from "next/image";
 import Pill from "../atoms/Pill";
-import { Exercise } from "./PrSection";
+import { ExerciseType } from "@/lib/types";
 
-function PrList({ exerciseData }: { exerciseData: Exercise[] }) {
+function PrList({ exerciseData }: { exerciseData: ExerciseType[] }) {
     return (
         <ul className="flex flex-col gap-4">
             {exerciseData.map((exercise, index) => (
