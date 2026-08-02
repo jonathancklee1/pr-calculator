@@ -68,27 +68,27 @@ export const EXERCISE_LIST: ExerciseListType[] = [
         muscleGroup: ["Chest", "Upper Body"],
     },
     {
-        name: "Flat Bench Press",
+        name: "Incline Bench Press",
         imageUrl:
             "https://images.pexels.com/photos/38247624/pexels-photo-38247624.jpeg",
         muscleGroup: ["Chest", "Upper Body"],
     },
     {
-        name: "Flat Bench Press",
+        name: "Decline Bench Press",
         imageUrl:
             "https://images.pexels.com/photos/38247624/pexels-photo-38247624.jpeg",
         muscleGroup: ["Chest", "Upper Body"],
     },
     {
-        name: "Flat Bench Press",
+        name: "Pike Push-up",
         imageUrl:
             "https://images.pexels.com/photos/38247624/pexels-photo-38247624.jpeg",
-        muscleGroup: ["Chest", "Upper Body"],
+        muscleGroup: ["Chest", "Shoulders", "Triceps"],
     },
     {
-        name: "Flat Bench Press",
+        name: "Dips",
         imageUrl:
             "https://images.pexels.com/photos/38247624/pexels-photo-38247624.jpeg",
-        muscleGroup: ["Chest", "Upper Body"],
+        muscleGroup: ["Chest", "Triceps"],
     },
 ];

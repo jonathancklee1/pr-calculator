@@ -8,6 +8,21 @@ import { Plus } from "lucide-react";
 import { CATEGORIES, EXERCISE_LIST } from "@/lib/constants";
 export default function Exercises() {
     const [selectedFilter, setSelectedFilter] = useState("All");
+    const [searchTerm, setSearchTerm] = useState("");
+    const filteredExercises =
+        selectedFilter === "All"
+            ? EXERCISE_LIST.filter((exercise) =>
+                  exercise.name
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()),
+              )
+            : EXERCISE_LIST.filter((exercise) =>
+                  exercise.muscleGroup.includes(selectedFilter),
+              ).filter((exercise) =>
+                  exercise.name
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()),
+              );
     return (
         <div className="relative min-h-screen py-20 flex flex-col gap-4 px-4">
             <h1 className="text-3xl font-bold">Exercises</h1>
@@ -15,7 +30,12 @@ export default function Exercises() {
                 Select an exercise to add a new personal record.
             </p>
             <div className="relative w-full max-w-md mb-4">
-                <Input isSearch />
+                <Input
+                    isSearch
+                    inputProps={{
+                        onChange: (e) => setSearchTerm(e.target.value),
+                    }}
+                />
             </div>
 
             <div className="flex gap-3 overflow-x-auto pb-2">
@@ -33,7 +53,7 @@ export default function Exercises() {
                 ))}
             </div>
             <ul className="flex flex-col gap-4 overflow-auto max-h-[calc(100dvh-420px)]">
-                {EXERCISE_LIST.map((exercise, index) => (
+                {filteredExercises.map((exercise, index) => (
                     <li
                         key={exercise.name + index}
                         onClick={() => console.log("Redirect to Add PR page")}

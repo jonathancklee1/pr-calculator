@@ -6,16 +6,18 @@ import {
     InputGroupAddon,
     InputGroupInput,
 } from "@/components/ui/input-group";
-import { CSSProperties } from "react";
+import { ComponentProps, CSSProperties } from "react";
 
 export function Input({
     isSearch,
     placeholder,
     styles,
+    inputProps: props,
 }: {
     isSearch?: boolean;
     placeholder?: string;
     styles?: CSSProperties | string;
+    inputProps: ComponentProps<"input">;
 }) {
     return (
         <Field className="max-w-sm ">
@@ -25,6 +27,7 @@ export function Input({
                 <InputGroupInput
                     id="inline-start-input"
                     placeholder={placeholder || "Search..."}
+                    {...props}
                 />
                 {isSearch && (
                     <InputGroupAddon align="inline-start">
