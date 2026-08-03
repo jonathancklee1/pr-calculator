@@ -1,7 +1,7 @@
 export interface ExerciseType {
     name: string;
     imageUrl: string;
-    muscleGroup: string;
+    muscleGroup: string[];
     date: string;
     weight: number;
     oneRM: number;

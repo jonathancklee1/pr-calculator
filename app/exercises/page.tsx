@@ -1,11 +1,10 @@
 "use client";
-import Card from "@/components/atoms/Card";
 import { Input } from "@/components/atoms/Input";
 import Pill from "@/components/atoms/Pill";
 import { useState } from "react";
-import Image from "next/image";
-import { Plus } from "lucide-react";
 import { CATEGORIES, EXERCISE_LIST } from "@/lib/constants";
+import ExerciseCard from "@/components/exercises/ExerciseCard";
+import { useRouter } from "next/navigation";
 export default function Exercises() {
     const [selectedFilter, setSelectedFilter] = useState("All");
     const [searchTerm, setSearchTerm] = useState("");
@@ -23,6 +22,10 @@ export default function Exercises() {
                       .toLowerCase()
                       .includes(searchTerm.toLowerCase()),
               );
+    const router = useRouter();
+    function handleCardClick(exerciseId: string) {
+        router.push(`/exercises/${exerciseId}`);
+    }
     return (
         <div className="relative min-h-screen py-20 flex flex-col gap-4 px-4">
             <h1 className="text-3xl font-bold">Exercises</h1>
@@ -52,44 +55,14 @@ export default function Exercises() {
                     </button>
                 ))}
             </div>
-            <ul className="flex flex-col gap-4 overflow-auto max-h-[calc(100dvh-420px)]">
+            <ul className="flex flex-col gap-4 overflow-auto max-h-[calc(100dvh-400px)]">
                 {filteredExercises.map((exercise, index) => (
                     <li
                         key={exercise.name + index}
-                        onClick={() => console.log("Redirect to Add PR page")}
+                        onClick={() => handleCardClick("1")}
                         className="cursor-pointer"
                     >
-                        <Card>
-                            <div className="flex items-center justify-between gap-4">
-                                <div className="flex items-center gap-4">
-                                    <Image
-                                        src={exercise.imageUrl}
-                                        alt={exercise.name}
-                                        width={90}
-                                        height={90}
-                                        className="rounded-xl aspect-square object-cover"
-                                    />
-                                    <div className="flex flex-col gap-2">
-                                        <h3 className="font-bold text-xl">
-                                            {exercise.name}
-                                        </h3>
-                                        <div className="flex gap-2 flex-wrap">
-                                            {exercise.muscleGroup.map(
-                                                (group, index) => (
-                                                    <Pill
-                                                        key={group + index}
-                                                        styles="bg-accent-text text-tertiary-text"
-                                                    >
-                                                        {group}
-                                                    </Pill>
-                                                ),
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                                <Plus className="size-6 text-primary-text mt-2" />
-                            </div>
-                        </Card>
+                        <ExerciseCard exercise={exercise} />
                     </li>
                 ))}
             </ul>
