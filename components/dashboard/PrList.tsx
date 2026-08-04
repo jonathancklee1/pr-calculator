@@ -17,6 +17,7 @@ function PrList({ exerciseData }: { exerciseData: ExerciseType[] }) {
                                     width={90}
                                     height={90}
                                     className="rounded-xl aspect-square object-cover"
+                                    unoptimized
                                 />
                                 <div className="flex flex-col gap-2">
                                     <h3 className="font-bold ">

@@ -26,6 +26,7 @@ function ExerciseCard({ exercise }: { exercise: ExerciseListType }) {
                             height={90}
                             onError={() => setImgError(true)}
                             className="rounded-xl aspect-square object-cover"
+                            unoptimized
                         />
                     )}
 
