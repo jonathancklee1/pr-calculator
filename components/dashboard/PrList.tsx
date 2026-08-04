@@ -12,18 +12,19 @@ function PrList({ exerciseData }: { exerciseData: ExerciseType[] }) {
                         <div className="flex items-center justify-between gap-4">
                             <div className="flex items-center gap-4">
                                 <Image
-                                    src={exercise.imageUrl}
+                                    src={exercise.gifUrl}
                                     alt={exercise.name}
                                     width={90}
                                     height={90}
                                     className="rounded-xl aspect-square object-cover"
+                                    unoptimized
                                 />
                                 <div className="flex flex-col gap-2">
                                     <h3 className="font-bold ">
                                         {exercise.name}
                                     </h3>
                                     <Pill styles="bg-accent-text text-tertiary-text">
-                                        {exercise.muscleGroup}
+                                        {exercise.bodyParts.join(", ")}
                                     </Pill>
                                     <p className="font-bold text-xs">
                                         {exercise.date}
