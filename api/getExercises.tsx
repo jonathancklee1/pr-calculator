@@ -1,6 +1,6 @@
 export async function getExercises(cursor?: string) {
     const res = await fetch(
-        `https://oss.exercisedb.dev/api/v1/exercises?limit=25${cursor ? `&cursor=${cursor}` : ""}`,
+        `https://oss.exercisedb.dev/api/v1/exercises?limit=25${cursor ? `&after=${cursor}` : ""}`,
         {
             next: { revalidate: 3600 },
         },

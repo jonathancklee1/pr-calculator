@@ -5,6 +5,7 @@ import {
     useRef,
     useCallback,
     useEffect,
+    useState,
     Dispatch,
     SetStateAction,
 } from "react";
@@ -16,40 +17,51 @@ function ExerciseList({
     exercises,
     setExerciseData,
     meta,
-    loading,
 }: {
     selectedFilter: string;
     searchTerm: string;
     exercises: ExerciseData[];
     setExerciseData: Dispatch<SetStateAction<ExerciseData[]>>;
     meta: ExerciseMeta;
-    loading: boolean;
 }) {
     const router = useRouter();
-    const loadingRef = useRef(loading);
     const containerRef = useRef<HTMLUListElement | null>(null);
     const sentinelRef = useRef<HTMLDivElement | null>(null);
 
-    // keep the ref in sync so the observer callback always sees the latest value
-    useEffect(() => {
-        loadingRef.current = loading;
-    }, [loading]);
+    const [loading, setLoading] = useState(false);
 
+    const metaRef = useRef<ExerciseMeta>(meta); // synchronous read for the observer callback
+    const loadingRef = useRef(false);
     const handleIntersect = useCallback(
         async (entries: IntersectionObserverEntry[]) => {
+            const isFiltering =
+                selectedFilter !== "All" || searchTerm.trim() !== "";
+
             if (
-                entries[0].isIntersecting &&
-                !loadingRef.current &&
-                meta.hasNextPage
+                !entries[0].isIntersecting ||
+                loadingRef.current ||
+                !metaRef.current.hasNextPage ||
+                isFiltering
             ) {
-                // End is hit, call the next page
-                const { data: exercises, meta: newMeta } = await getExercises(
-                    meta.nextCursor,
-                );
-                setExerciseData((prev) => [...prev, ...exercises]);
+                return;
+            }
+
+            loadingRef.current = true;
+            setLoading(true);
+
+            try {
+                const { data: newExercises, meta: newMeta } =
+                    await getExercises(metaRef.current.nextCursor);
+                metaRef.current = newMeta;
+                setExerciseData((prev) => [...prev, ...newExercises]);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                loadingRef.current = false;
+                setLoading(false);
             }
         },
-        [meta.hasNextPage, meta.nextCursor, setExerciseData],
+        [setExerciseData, selectedFilter, searchTerm],
     );
 
     useEffect(() => {
@@ -88,7 +100,7 @@ function ExerciseList({
     return (
         <ul
             ref={containerRef}
-            className="flex flex-col gap-4 overflow-auto max-h-[calc(100dvh-400px)]"
+            className="flex flex-col gap-4 overflow-auto max-h-[calc(100dvh-410px)]"
         >
             {filteredExercises.map((exercise) => (
                 <li
@@ -104,11 +116,6 @@ function ExerciseList({
             {loading && (
                 <p className="text-center text-secondary-text">
                     Loading more...
-                </p>
-            )}
-            {!meta.hasNextPage && (
-                <p className="text-center text-secondary-text">
-                    No more exercises
                 </p>
             )}
         </ul>
