@@ -39,3 +39,14 @@ export interface ExerciseMeta {
     hasNextPage: boolean;
     nextCursor?: string;
 }
+export interface ExerciseRecord {
+    name: string | null;
+    gifUrl: string | null;
+    currentPR: number | null;
+    goal: number | null;
+    date: string | null;
+    oneRM: number | null;
+    bodyParts: string[];
+    weight: number | null;
+    reps: number | null;
+}

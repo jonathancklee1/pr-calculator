@@ -63,7 +63,6 @@ function ExerciseSection({
                 selectedFilter={selectedFilter}
                 searchTerm={searchTerm}
                 meta={meta}
-                loading={false}
             />
         </section>
     );

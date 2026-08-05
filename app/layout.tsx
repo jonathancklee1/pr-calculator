@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/nav/Navbar";
 import BottomNav from "@/components/nav/BottomNav";
+import { PrStateProvider } from "@/context/PrContext";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -39,11 +40,13 @@ export default function RootLayout({
                 inter.variable,
             )}
         >
-            <body className="min-h-screen flex flex-col">
-                <Navbar />
-                <main>{children}</main>
-                <BottomNav />
-            </body>
+            <PrStateProvider>
+                <body className="min-h-screen flex flex-col">
+                    <Navbar />
+                    <main>{children}</main>
+                    <BottomNav />
+                </body>
+            </PrStateProvider>
         </html>
     );
 }
