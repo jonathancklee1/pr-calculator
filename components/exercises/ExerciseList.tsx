@@ -97,6 +97,15 @@ function ExerciseList({
                           .includes(searchTerm.toLowerCase()),
                   );
 
+    if (filteredExercises.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center gap-4">
+                <h2 className="text-2xl font-bold text-primary-text">
+                    No exercises found
+                </h2>
+            </div>
+        );
+    }
     return (
         <ul
             ref={containerRef}

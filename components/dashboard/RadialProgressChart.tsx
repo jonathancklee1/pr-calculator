@@ -18,13 +18,13 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function RadialProgressChart({
-    currentPR = 60,
-    goal = 90,
+    currentPR = 0,
+    goal = 0,
     label,
 }: {
-    currentPR?: number;
-    goal?: number;
-    label?: string;
+    currentPR?: number | null;
+    goal?: number | null;
+    label?: string | null;
 }) {
     const chartData = [
         {
@@ -52,7 +52,11 @@ export function RadialProgressChart({
                     fill="var(--secondary-background)"
                     background={{ fill: "#ffffff" }}
                 />
-                <PolarAngleAxis type="number" domain={[0, goal]} tick={false} />
+                <PolarAngleAxis
+                    type="number"
+                    domain={[0, goal || 0]}
+                    tick={false}
+                />
                 <PolarRadiusAxis
                     tick={false}
                     tickLine={false}
@@ -69,28 +73,44 @@ export function RadialProgressChart({
                                         textAnchor="middle"
                                         dominantBaseline="middle"
                                     >
-                                        <tspan
-                                            x={viewBox.cx}
-                                            y={(viewBox.cy || 0) - 36}
-                                            className="fill-secondary-text text-2xl font-bold"
-                                            textLength="200"
-                                            lengthAdjust="spacingAndGlyphs"
-                                        >
-                                            {label}
-                                        </tspan>
+                                        {label ? (
+                                            <tspan
+                                                x={viewBox.cx}
+                                                y={(viewBox.cy || 0) - 36}
+                                                className="fill-secondary-text text-2xl font-bold capitalize"
+                                                textLength="200"
+                                                lengthAdjust="spacingAndGlyphs"
+                                            >
+                                                {label}
+                                            </tspan>
+                                        ) : (
+                                            <tspan
+                                                x={viewBox.cx}
+                                                y={(viewBox.cy || 0) - 36}
+                                                className="fill-secondary-text text-2xl font-bold"
+                                            >
+                                                No PRs yet
+                                            </tspan>
+                                        )}
+
                                         <tspan
                                             x={viewBox.cx}
                                             y={viewBox.cy}
                                             className="fill-primary-text text-4xl font-bold "
                                         >
-                                            {chartData[0].exercise}kg
+                                            {chartData[0].exercise
+                                                ? chartData[0].exercise
+                                                : "- "}
+                                            kg
                                         </tspan>
                                         <tspan
                                             x={viewBox.cx}
                                             y={(viewBox.cy || 0) + 36}
                                             className="fill-accent-text text-lg font-bold"
                                         >
-                                            Goal: {goal}kg
+                                            {goal
+                                                ? `Goal: ${goal}kg`
+                                                : "No goal set"}
                                         </tspan>
                                     </text>
                                 );
