@@ -20,17 +20,17 @@ const STORAGE_KEY = "pr-state";
 
 const defaultState: PrState = {
     prs: [
-        {
-            name: null,
-            gifUrl: null,
-            currentPR: null,
-            goal: null,
-            date: null,
-            oneRM: null,
-            bodyParts: [],
-            weight: null,
-            reps: null,
-        },
+        // {
+        //     name: null,
+        //     gifUrl: null,
+        //     currentPR: null,
+        //     goal: null,
+        //     date: null,
+        //     oneRM: null,
+        //     bodyParts: [],
+        //     weight: null,
+        //     reps: null,
+        // },
     ],
     setState: () => {},
 };

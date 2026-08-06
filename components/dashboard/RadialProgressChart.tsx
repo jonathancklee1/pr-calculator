@@ -18,8 +18,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function RadialProgressChart({
-    currentPR = 60,
-    goal = 90,
+    currentPR = 0,
+    goal = 0,
     label,
 }: {
     currentPR?: number | null;
@@ -77,7 +77,7 @@ export function RadialProgressChart({
                                             <tspan
                                                 x={viewBox.cx}
                                                 y={(viewBox.cy || 0) - 36}
-                                                className="fill-secondary-text text-2xl font-bold"
+                                                className="fill-secondary-text text-2xl font-bold capitalize"
                                                 textLength="200"
                                                 lengthAdjust="spacingAndGlyphs"
                                             >
