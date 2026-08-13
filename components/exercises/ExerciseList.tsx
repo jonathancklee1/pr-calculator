@@ -17,37 +17,37 @@ function ExerciseList({
     exercises,
     setExerciseData,
     meta,
+    loading,
 }: {
     selectedFilter: string;
     searchTerm: string;
     exercises: ExerciseData[];
     setExerciseData: Dispatch<SetStateAction<ExerciseData[]>>;
     meta: ExerciseMeta;
+    loading: boolean;
 }) {
     const router = useRouter();
     const containerRef = useRef<HTMLUListElement | null>(null);
     const sentinelRef = useRef<HTMLDivElement | null>(null);
 
-    const [loading, setLoading] = useState(false);
+    const [scrollLoading, setScrollLoading] = useState(false);
 
-    const metaRef = useRef<ExerciseMeta>(meta); // synchronous read for the observer callback
+    const metaRef = useRef<ExerciseMeta>(meta);
     const loadingRef = useRef(false);
     const handleIntersect = useCallback(
         async (entries: IntersectionObserverEntry[]) => {
-            const isFiltering =
-                selectedFilter !== "All" || searchTerm.trim() !== "";
-
             if (
                 !entries[0].isIntersecting ||
                 loadingRef.current ||
                 !metaRef.current.hasNextPage ||
-                isFiltering
+                searchTerm ||
+                selectedFilter
             ) {
                 return;
             }
 
             loadingRef.current = true;
-            setLoading(true);
+            setScrollLoading(true);
 
             try {
                 const { data: newExercises, meta: newMeta } =
@@ -58,10 +58,10 @@ function ExerciseList({
                 console.error(err);
             } finally {
                 loadingRef.current = false;
-                setLoading(false);
+                setScrollLoading(false);
             }
         },
-        [setExerciseData, selectedFilter, searchTerm],
+        [searchTerm, selectedFilter, setExerciseData],
     );
 
     useEffect(() => {
@@ -81,21 +81,13 @@ function ExerciseList({
     }
 
     const filteredExercises =
-        selectedFilter === "All"
-            ? exercises.filter((exercise) =>
-                  exercise.name
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase()),
+        selectedFilter !== "All"
+            ? exercises?.filter(
+                  (exercise) =>
+                      exercise.bodyParts &&
+                      exercise.bodyParts?.includes(selectedFilter),
               )
-            : exercises
-                  .filter((exercise) =>
-                      exercise.bodyParts.includes(selectedFilter),
-                  )
-                  .filter((exercise) =>
-                      exercise.name
-                          .toLowerCase()
-                          .includes(searchTerm.toLowerCase()),
-                  );
+            : exercises;
 
     if (filteredExercises.length === 0) {
         return (
@@ -111,18 +103,19 @@ function ExerciseList({
             ref={containerRef}
             className="flex flex-col gap-4 overflow-auto max-h-[calc(100dvh-410px)]"
         >
-            {filteredExercises.map((exercise) => (
-                <li
-                    key={exercise.exerciseId}
-                    onClick={() => handleCardClick(exercise.exerciseId)}
-                    className="cursor-pointer"
-                >
-                    <ExerciseCard exercise={exercise} />
-                </li>
-            ))}
+            {filteredExercises?.length > 0 &&
+                filteredExercises?.map((exercise) => (
+                    <li
+                        key={exercise.exerciseId}
+                        onClick={() => handleCardClick(exercise.exerciseId)}
+                        className="cursor-pointer"
+                    >
+                        <ExerciseCard exercise={exercise} />
+                    </li>
+                ))}
             <div ref={sentinelRef} className="h-4" />
 
-            {loading && (
+            {(loading || scrollLoading) && (
                 <p className="text-center text-secondary-text">
                     Loading more...
                 </p>

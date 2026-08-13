@@ -35,14 +35,15 @@ function ExerciseCard({ exercise }: { exercise: ExerciseListType }) {
                             {exercise.name}
                         </h3>
                         <div className="flex gap-2 flex-wrap">
-                            {exercise.bodyParts.map((group, index) => (
-                                <Pill
-                                    key={group + index}
-                                    styles="bg-accent-text text-tertiary-text capitalize"
-                                >
-                                    {group}
-                                </Pill>
-                            ))}
+                            {exercise.bodyParts?.length > 0 &&
+                                exercise.bodyParts?.map((group, index) => (
+                                    <Pill
+                                        key={group + index}
+                                        styles="bg-accent-text text-tertiary-text capitalize"
+                                    >
+                                        {group}
+                                    </Pill>
+                                ))}
                         </div>
                     </div>
                 </div>

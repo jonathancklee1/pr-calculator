@@ -2,12 +2,10 @@
 import Card from "../atoms/Card";
 import Image from "next/image";
 import Pill from "../atoms/Pill";
-import { ExerciseType } from "@/lib/types";
 import { usePrState } from "@/context/PrContext";
 
-function PrList({ exerciseData }: { exerciseData: ExerciseType[] }) {
+function PrList() {
     const { prs } = usePrState();
-    console.log(prs);
     if (!prs || prs.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center gap-4">

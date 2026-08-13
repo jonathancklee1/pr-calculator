@@ -1,9 +1,10 @@
 "use client";
 import { Input } from "../atoms/Input";
 import Pill from "../atoms/Pill";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import ExerciseList from "./ExerciseList";
 import { ExerciseData } from "@/lib/types";
+import { searchExercises } from "@/api/getSearchExercise";
 
 function ExerciseSection({
     exercises,
@@ -20,42 +21,63 @@ function ExerciseSection({
     const [selectedFilter, setSelectedFilter] = useState("All");
     const [searchTerm, setSearchTerm] = useState("");
     const [exerciseData, setExerciseData] = useState<ExerciseData[]>(exercises);
-    console.log("exercises in ExerciseSection:", exercises);
-    console.log("bodyParts in ExerciseSection:", bodyParts);
+    const [loading, setLoading] = useState(false);
     const mappedBodyParts = [
         {
             name: "All",
         },
         ...bodyParts,
     ];
+
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        if (!searchTerm.trim()) return;
+
+        setLoading(true);
+        try {
+            const { data } = await searchExercises(searchTerm);
+            setExerciseData(data);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <section className="flex flex-col gap-4">
             <h1 className="text-3xl font-bold">Exercises</h1>
             <p className=" text-secondary-text">
                 Select an exercise to add a new personal record.
             </p>
-            <div className="relative w-full max-w-md mb-4">
+            <form
+                className="relative w-full max-w-md mb-4"
+                action=""
+                method="get"
+                onSubmit={handleSubmit}
+            >
                 <Input
                     isSearch
                     inputProps={{
                         onChange: (e) => setSearchTerm(e.target.value),
                     }}
                 />
-            </div>
+            </form>
 
             <div className="flex gap-3 overflow-x-auto pb-2">
-                {mappedBodyParts.map(({ name }, index) => (
-                    <button
-                        onClick={() => setSelectedFilter(name)}
-                        key={name + index}
-                    >
-                        <Pill
-                            styles={`font-bold p-4 text-lg cursor-pointer capitalize ${selectedFilter === name ? "bg-secondary-background hover:bg-secondary-hover text-primary-background  text-tertiary-text" : "bg-tertiary-background hover:bg-secondary-hover text-secondary-text"}`}
+                {mappedBodyParts.length > 0 &&
+                    mappedBodyParts.map(({ name }, index) => (
+                        <button
+                            onClick={() => setSelectedFilter(name)}
+                            key={name + index}
                         >
-                            {name}
-                        </Pill>
-                    </button>
-                ))}
+                            <Pill
+                                styles={`font-bold p-4 text-lg cursor-pointer capitalize ${selectedFilter === name ? "bg-secondary-background hover:bg-secondary-hover text-primary-background  text-tertiary-text" : "bg-tertiary-background hover:bg-secondary-hover text-secondary-text"}`}
+                            >
+                                {name}
+                            </Pill>
+                        </button>
+                    ))}
             </div>
             <ExerciseList
                 exercises={exerciseData}
@@ -63,6 +85,7 @@ function ExerciseSection({
                 selectedFilter={selectedFilter}
                 searchTerm={searchTerm}
                 meta={meta}
+                loading={loading}
             />
         </section>
     );
