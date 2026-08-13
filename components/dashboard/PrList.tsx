@@ -50,15 +50,17 @@ function PrList({ exerciseData }: { exerciseData: ExerciseType[] }) {
                                 </div>
                             </div>
                             <div className="flex flex-col items-end gap-1 text-end">
-                                <p className="font-bold text-3xl text-primary-text">
+                                <p className="font-bold text-3xl text-primary-text text-nowrap">
                                     <span className="font-medium text-base mr-1">
                                         {exercise?.reps}x
                                     </span>
-                                    {`${exercise?.weight}kg`}
+                                    {`${exercise?.currentPR}kg`}
                                 </p>
-                                <p className="font-medium text-secondary-text text-sm">
-                                    Estimated 1RM: {exercise?.oneRM}kg
-                                </p>
+                                {exercise?.oneRM && (
+                                    <p className="font-medium text-secondary-text text-sm">
+                                        Estimated 1RM: {exercise?.oneRM}kg
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </Card>

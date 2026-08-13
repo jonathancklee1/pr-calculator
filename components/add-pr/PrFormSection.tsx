@@ -2,13 +2,13 @@
 import Image from "next/image";
 import InputCard from "./InputCard";
 import { Button } from "../ui/button";
-import { Save } from "lucide-react";
+import { Trophy } from "lucide-react";
 import { ExerciseData, ExerciseRecord } from "@/lib/types";
 import { usePrState } from "@/context/PrContext";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getOneRepMax } from "@/lib/constants";
 function PrFormSection({ exercise }: { exercise: ExerciseData }) {
-    console.log("exercise", exercise);
     const router = useRouter();
 
     const { prs, setState } = usePrState();
@@ -55,6 +55,10 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
                                 currentPR: formInputs.weight,
                                 reps: formInputs.reps,
                                 goal: formInputs.goal,
+                                oneRM: getOneRepMax(
+                                    formInputs.weight,
+                                    formInputs.reps,
+                                ),
                             }
                           : pr,
                   )
@@ -67,7 +71,10 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
                           goal: formInputs.goal,
                           gifUrl: exercise.gifUrl ?? null,
                           date: new Date().toLocaleDateString("en-GB"),
-                          oneRM: null,
+                          oneRM: getOneRepMax(
+                              formInputs.weight,
+                              formInputs.reps,
+                          ),
                           bodyParts: exercise.bodyParts,
                       } as ExerciseRecord,
                   ];
@@ -127,7 +134,7 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
                     className="w-full bg-secondary-background text-tertiary-text rounded-lg cursor-pointer text-xl p-7 hover:bg-secondary-background-hover active:bg-secondary-background-hover font-bold"
                     onClick={savePR}
                 >
-                    <Save className="size-5" />
+                    <Trophy className="size-5" />
                     Save PR
                 </Button>
             </div>

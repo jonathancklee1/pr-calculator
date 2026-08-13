@@ -1,4 +1,4 @@
-import { ExerciseListType, ExerciseType } from "./types";
+import { ExerciseType } from "./types";
 
 export const PR_EXERCISES: ExerciseType[] = [
     {
@@ -55,3 +55,7 @@ export const CATEGORIES: string[] = [
     "Shoulders",
     "Arms",
 ];
+
+export const getOneRepMax = (w: number, r: number) => {
+    return (w * (1 + r / 30)).toFixed(2);
+};
