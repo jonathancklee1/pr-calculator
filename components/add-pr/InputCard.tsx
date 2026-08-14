@@ -30,10 +30,12 @@ function InputCard({
 
     return (
         <Card>
-            <div className="flex gap-2 justify-between items-center mb-2">
+            <div className="flex gap-3 items-center mb-2">
                 <h3 className="text-lg font-semibold">{label}</h3>
                 {showUnit && (
-                    <Pill styles="bg-accent-text text-tertiary-text">KG</Pill>
+                    <Pill styles="bg-accent-text text-tertiary-text font-bold">
+                        KG
+                    </Pill>
                 )}
             </div>
             <div className="flex gap-6 justify-between items-center">

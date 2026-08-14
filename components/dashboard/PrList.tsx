@@ -21,7 +21,7 @@ function PrList() {
                     <Card>
                         <div className="flex items-center justify-between gap-4">
                             <div className="flex items-center gap-4">
-                                {exercise?.gifUrl && (
+                                {exercise?.gifUrl ? (
                                     <Image
                                         src={exercise?.gifUrl}
                                         alt={exercise?.name || ""}
@@ -30,6 +30,12 @@ function PrList() {
                                         className="rounded-xl aspect-square object-cover"
                                         unoptimized
                                     />
+                                ) : (
+                                    <div className="flex items-center justify-center bg-tertiary-background rounded-md h-22.5">
+                                        <span className="text-secondary-text text-sm text-wrap text-center  w-22.5">
+                                            No image available
+                                        </span>
+                                    </div>
                                 )}
 
                                 <div className="flex flex-col gap-2">
