@@ -47,8 +47,8 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
         if (type === "error") {
             toast(message, {
                 position: "top-center",
-                autoClose: 4000,
-                hideProgressBar: true,
+                autoClose: 3500,
+                hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
@@ -59,8 +59,8 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
         } else {
             toast(message, {
                 position: "top-center",
-                autoClose: 4000,
-                hideProgressBar: true,
+                autoClose: 3500,
+                hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,

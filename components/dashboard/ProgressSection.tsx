@@ -49,10 +49,20 @@ function ProgressSection() {
                 />
             </div>
             <p className="text-lg font-semibold text-secondary-text text-center w-full mx-auto mt-2 capitalize">
-                {exercise?.name && exercise?.currentPR && exercise?.goal
-                    ? `${exercise?.name} Progress:
-                    ${((exercise?.currentPR / exercise?.goal) * 100).toFixed(2)}%`
-                    : "Start your journey by adding your first PR!"}
+                {exercise?.name && exercise?.currentPR && exercise?.goal ? (
+                    <>
+                        {exercise.name} Progress:{" "}
+                        <span className="text-accent-text font-extrabold">
+                            {(
+                                (exercise.currentPR / exercise.goal) *
+                                100
+                            ).toFixed(0)}
+                            %
+                        </span>
+                    </>
+                ) : (
+                    "Start your journey by adding your first PR!"
+                )}
             </p>
         </section>
     );
