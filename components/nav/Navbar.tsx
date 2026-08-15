@@ -1,4 +1,4 @@
-import { CircleUser, Dumbbell } from "lucide-react";
+import { Dumbbell } from "lucide-react";
 import Link from "next/link";
 
 function Navbar() {
@@ -13,7 +13,6 @@ function Navbar() {
                     PR Calculator
                 </span>
             </Link>
-            <CircleUser className="w-6 h-6" />
         </nav>
     );
 }

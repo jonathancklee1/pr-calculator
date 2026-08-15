@@ -19,19 +19,7 @@ interface PrState {
 const STORAGE_KEY = "pr-state";
 
 const defaultState: PrState = {
-    prs: [
-        // {
-        //     name: null,
-        //     gifUrl: null,
-        //     currentPR: null,
-        //     goal: null,
-        //     date: null,
-        //     oneRM: null,
-        //     bodyParts: [],
-        //     weight: null,
-        //     reps: null,
-        // },
-    ],
+    prs: [],
     setState: () => {},
 };
 
@@ -45,6 +33,7 @@ export function PrStateProvider({ children }: { children: ReactNode }) {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setState(JSON.parse(stored));
             }
         } catch (err) {

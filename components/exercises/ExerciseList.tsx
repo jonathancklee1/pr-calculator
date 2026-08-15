@@ -40,8 +40,8 @@ function ExerciseList({
                 !entries[0].isIntersecting ||
                 loadingRef.current ||
                 !metaRef.current.hasNextPage ||
-                searchTerm ||
-                selectedFilter
+                searchTerm !== "" ||
+                selectedFilter !== "All"
             ) {
                 return;
             }

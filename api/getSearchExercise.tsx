@@ -1,6 +1,6 @@
-export async function searchExercises(query: string, threshold: number = 0.4) {
+export async function searchExercises(query: string) {
     const res = await fetch(
-        `https://oss.exercisedb.dev/api/v1/exercises/search?search=${encodeURIComponent(query)}&threshold=${threshold}`,
+        `https://oss.exercisedb.dev/api/v1/exercises?name=${encodeURIComponent(query)}&limit=25`,
         {
             next: { revalidate: 3600 },
         },
