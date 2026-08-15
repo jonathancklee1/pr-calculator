@@ -17,23 +17,21 @@ function InputCard({
     setValue: (value: number) => void;
 }) {
     const handleIncrement = () => {
-        // Handle increment logic here
-        console.log("Increment clicked");
         setValue(value === "" ? 1 : Number(value) + 1);
     };
 
     const handleDecrement = () => {
-        // Handle decrement logic here
-        console.log("Decrement clicked");
         setValue(value === "" ? 0 : Math.max(0, Number(value) - 1));
     };
 
     return (
         <Card>
-            <div className="flex gap-2 justify-between items-center mb-2">
+            <div className="flex gap-3 items-center mb-2">
                 <h3 className="text-lg font-semibold">{label}</h3>
                 {showUnit && (
-                    <Pill styles="bg-accent-text text-tertiary-text">KG</Pill>
+                    <Pill styles="bg-accent-text text-tertiary-text font-bold">
+                        KG
+                    </Pill>
                 )}
             </div>
             <div className="flex gap-6 justify-between items-center">

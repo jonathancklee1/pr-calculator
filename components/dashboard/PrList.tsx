@@ -2,12 +2,10 @@
 import Card from "../atoms/Card";
 import Image from "next/image";
 import Pill from "../atoms/Pill";
-import { ExerciseType } from "@/lib/types";
 import { usePrState } from "@/context/PrContext";
 
-function PrList({ exerciseData }: { exerciseData: ExerciseType[] }) {
+function PrList() {
     const { prs } = usePrState();
-    console.log(prs);
     if (!prs || prs.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center gap-4">
@@ -23,7 +21,7 @@ function PrList({ exerciseData }: { exerciseData: ExerciseType[] }) {
                     <Card>
                         <div className="flex items-center justify-between gap-4">
                             <div className="flex items-center gap-4">
-                                {exercise?.gifUrl && (
+                                {exercise?.gifUrl ? (
                                     <Image
                                         src={exercise?.gifUrl}
                                         alt={exercise?.name || ""}
@@ -32,6 +30,12 @@ function PrList({ exerciseData }: { exerciseData: ExerciseType[] }) {
                                         className="rounded-xl aspect-square object-cover"
                                         unoptimized
                                     />
+                                ) : (
+                                    <div className="flex items-center justify-center bg-tertiary-background rounded-md h-22.5">
+                                        <span className="text-secondary-text text-sm text-wrap text-center  w-22.5">
+                                            No image available
+                                        </span>
+                                    </div>
                                 )}
 
                                 <div className="flex flex-col gap-2">
@@ -50,15 +54,17 @@ function PrList({ exerciseData }: { exerciseData: ExerciseType[] }) {
                                 </div>
                             </div>
                             <div className="flex flex-col items-end gap-1 text-end">
-                                <p className="font-bold text-3xl text-primary-text">
+                                <p className="font-bold text-3xl text-primary-text text-nowrap">
                                     <span className="font-medium text-base mr-1">
                                         {exercise?.reps}x
                                     </span>
-                                    {`${exercise?.weight}kg`}
+                                    {`${exercise?.currentPR}kg`}
                                 </p>
-                                <p className="font-medium text-secondary-text text-sm">
-                                    Estimated 1RM: {exercise?.oneRM}kg
-                                </p>
+                                {exercise?.oneRM && (
+                                    <p className="font-medium text-secondary-text text-sm">
+                                        Estimated 1RM: {exercise?.oneRM}kg
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </Card>

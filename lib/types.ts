@@ -45,8 +45,7 @@ export interface ExerciseRecord {
     currentPR: number | null;
     goal: number | null;
     date: string | null;
-    oneRM: number | null;
+    oneRM: string | null;
     bodyParts: string[];
-    weight: number | null;
     reps: number | null;
 }
