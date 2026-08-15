@@ -96,6 +96,9 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
                                         formInputs.weight,
                                         formInputs.reps,
                                     ),
+                                    date: new Date().toLocaleDateString(
+                                        "en-GB",
+                                    ),
                                 }
                               : pr,
                       )
@@ -134,7 +137,7 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
             setSaving(true);
 
             showToast(
-                "PR Saved! Congratulations on hitting a new record!",
+                "PR Saved! Congratulations on hitting a new record! Redirecting to dashboard...",
                 "success",
             );
             resetForm();
