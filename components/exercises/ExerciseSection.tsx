@@ -31,7 +31,6 @@ function ExerciseSection({
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if (!searchTerm.trim()) return;
 
         setLoading(true);
         try {

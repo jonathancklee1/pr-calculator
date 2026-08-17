@@ -1,17 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+    output: "export", // Generates the 'out' folder
     images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "images.pexels.com",
-            },
-            {
-                protocol: "https",
-                hostname: "static.exercisedb.dev",
-            },
-        ],
+        unoptimized: true, // Required for static export
     },
 };
 
