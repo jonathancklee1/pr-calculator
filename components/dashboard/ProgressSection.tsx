@@ -8,6 +8,35 @@ import { useEffect, useState } from "react";
 import { usePrState } from "@/context/PrContext";
 import { ExerciseRecord } from "@/lib/types";
 
+// Keyed by gifUrl by the caller so shuffling to a different exercise resets
+// the failed-load state instead of getting stuck on the previous fallback.
+function ProgressAvatar({
+    gifUrl,
+    name,
+}: {
+    gifUrl?: string | null;
+    name?: string | null;
+}) {
+    const [imgFailed, setImgFailed] = useState(false);
+
+    if (!gifUrl || imgFailed) {
+        return (
+            <Dumbbell className="w-17.5 h-17.5 text-primary-text absolute left-1/2 -translate-x-1/2 top-13 mx-auto my-2 rounded-full aspect-square object-cover" />
+        );
+    }
+
+    return (
+        <Image
+            src={gifUrl}
+            alt={name ? name : "Exercise Image"}
+            width={90}
+            height={90}
+            onError={() => setImgFailed(true)}
+            className="w-22 h-22 absolute left-1/2 -translate-x-1/2 top-10 mx-auto my-2 rounded-full aspect-square object-cover"
+        />
+    );
+}
+
 function ProgressSection() {
     const { prs } = usePrState();
     const [exercise, setExercise] = useState<ExerciseRecord | undefined>(
@@ -50,17 +79,11 @@ function ProgressSection() {
     return (
         <section className="bg-primary-background">
             <div className="relative text-3xl">
-                {exercise?.gifUrl ? (
-                    <Image
-                        src={exercise?.gifUrl}
-                        alt={exercise?.name ? exercise?.name : "Exercise Image"}
-                        width={90}
-                        height={90}
-                        className="w-22 h-22 absolute left-1/2 -translate-x-1/2 top-10 mx-auto my-2 rounded-full aspect-square object-cover"
-                    />
-                ) : (
-                    <Dumbbell className="w-17.5 h-17.5 text-primary-text absolute left-1/2 -translate-x-1/2 top-13 mx-auto my-2 rounded-full aspect-square object-cover" />
-                )}
+                <ProgressAvatar
+                    key={exercise?.gifUrl}
+                    gifUrl={exercise?.gifUrl}
+                    name={exercise?.name}
+                />
 
                 <RadialProgressChart
                     currentPR={exercise?.currentPR}

@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import ExerciseImage from "../atoms/ExerciseImage";
 import InputCard from "./InputCard";
 import { ConfettiButton } from "@/components/ui/confetti";
 import { Trophy } from "lucide-react";
@@ -153,13 +153,13 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
     return (
         <section className="mb-4">
             <div className="relative w-full mb-4">
-                <Image
+                <ExerciseImage
                     src={exercise.gifUrl}
                     width={500}
                     height={200}
-                    alt={"barbell"}
+                    alt={exercise.name}
                     className="rounded-lg object-cover w-full aspect-video"
-                    unoptimized
+                    iconClassName="size-12 text-secondary-text"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
                 <h2 className="absolute bottom-2 left-2 text-3xl font-bold capitalize">
