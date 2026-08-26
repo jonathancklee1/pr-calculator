@@ -17,6 +17,12 @@ function ProgressSection() {
     function addNewExercise() {
         router.push("/exercises");
     }
+    const goalPercentage =
+        exercise?.goal &&
+        exercise?.currentPR &&
+        (Math.round((exercise?.currentPR / exercise?.goal) * 100) > 100
+            ? 100
+            : Math.round((exercise?.currentPR / exercise?.goal) * 100));
     return (
         <section className="bg-primary-background">
             <div className="relative text-3xl">
@@ -53,11 +59,7 @@ function ProgressSection() {
                     <>
                         {exercise.name} Progress:{" "}
                         <span className="text-accent-text font-extrabold">
-                            {(
-                                (exercise.currentPR / exercise.goal) *
-                                100
-                            ).toFixed(0)}
-                            %
+                            {goalPercentage}%
                         </span>
                     </>
                 ) : (
