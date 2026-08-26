@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { RadialProgressChart } from "./RadialProgressChart";
 import IconButton from "../atoms/IconButton";
-import { Dumbbell, Plus } from "lucide-react";
+import { Dumbbell, Plus, Shuffle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { usePrState } from "@/context/PrContext";
@@ -13,6 +13,7 @@ function ProgressSection() {
     const [exercise, setExercise] = useState<ExerciseRecord | undefined>(
         undefined,
     );
+    const [shuffleSpin, setShuffleSpin] = useState(0);
 
     // Picked once prs become available (post-hydration) and kept stable
     // afterwards, so unrelated re-renders elsewhere in the app don't swap
@@ -28,6 +29,17 @@ function ProgressSection() {
     const router = useRouter();
     function addNewExercise() {
         router.push("/exercises");
+    }
+    function randomizeExercise() {
+        if (prs.length < 2) return;
+        setShuffleSpin((spin) => spin + 360);
+        setExercise((prev) => {
+            let next = prev;
+            while (next === prev) {
+                next = prs[Math.floor(Math.random() * prs.length)];
+            }
+            return next;
+        });
     }
     const goalPercentage =
         exercise?.goal &&
@@ -55,6 +67,22 @@ function ProgressSection() {
                     goal={exercise?.goal}
                     label={exercise?.name}
                 />
+                {prs.length > 1 && (
+                    <IconButton
+                        icon={
+                            <Shuffle
+                                className="size-5 text-tertiary-text transition-transform duration-500 ease-out"
+                                strokeWidth="2.5"
+                                style={{
+                                    transform: `rotate(${shuffleSpin}deg)`,
+                                }}
+                            />
+                        }
+                        onClick={randomizeExercise}
+                        size="size-10"
+                        styles="absolute top-0 right-0"
+                    />
+                )}
                 <IconButton
                     icon={
                         <Plus
