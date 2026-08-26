@@ -34,14 +34,25 @@ function ExerciseList({
 
     const metaRef = useRef<ExerciseMeta>(meta);
     const loadingRef = useRef(false);
+    const searchTermRef = useRef(searchTerm);
+    const selectedFilterRef = useRef(selectedFilter);
+
+    useEffect(() => {
+        searchTermRef.current = searchTerm;
+    }, [searchTerm]);
+
+    useEffect(() => {
+        selectedFilterRef.current = selectedFilter;
+    }, [selectedFilter]);
+
     const handleIntersect = useCallback(
         async (entries: IntersectionObserverEntry[]) => {
             if (
                 !entries[0].isIntersecting ||
                 loadingRef.current ||
                 !metaRef.current.hasNextPage ||
-                searchTerm !== "" ||
-                selectedFilter !== "All"
+                searchTermRef.current !== "" ||
+                selectedFilterRef.current !== "All"
             ) {
                 return;
             }
@@ -61,7 +72,7 @@ function ExerciseList({
                 setScrollLoading(false);
             }
         },
-        [searchTerm, selectedFilter, setExerciseData],
+        [setExerciseData],
     );
 
     useEffect(() => {
@@ -77,7 +88,7 @@ function ExerciseList({
     }, [handleIntersect]);
 
     function handleCardClick(exerciseId: string) {
-        router.push(`/exercises/${exerciseId}`);
+        router.push(`/exercises/detail?id=${exerciseId}`);
     }
 
     const filteredExercises =

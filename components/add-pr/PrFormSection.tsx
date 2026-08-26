@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import InputCard from "./InputCard";
-import { Button } from "../ui/button";
+import { ConfettiButton } from "@/components/ui/confetti";
 import { Trophy } from "lucide-react";
 import { ExerciseData, ExerciseRecord } from "@/lib/types";
 import { usePrState } from "@/context/PrContext";
@@ -9,7 +9,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getOneRepMax } from "@/lib/constants";
 import { toast, ToastContainer } from "react-toastify";
-import confetti from "canvas-confetti";
 function PrFormSection({ exercise }: { exercise: ExerciseData }) {
     const router = useRouter();
     const [saving, setSaving] = useState(false);
@@ -74,11 +73,13 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
     function savePR(event: React.MouseEvent<HTMLButtonElement>) {
         try {
             if (
-                formInputs.weight === 0 ||
-                formInputs.reps === 0 ||
-                formInputs.goal === 0
-            )
-                throw new Error("Please fill in all fields");
+                formInputs.weight <= 0 ||
+                formInputs.reps <= 0 ||
+                formInputs.goal <= 0
+            ) {
+                event.preventDefault();
+                throw new Error("Inputs should be greater than 0");
+            }
             setState((prevState) => {
                 const exists = prevState.prs.some(
                     (pr) => pr.name === exercise.name,
@@ -125,15 +126,6 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
                 };
             });
 
-            const rect = event.currentTarget.getBoundingClientRect();
-            confetti({
-                particleCount: 150,
-                spread: 60,
-                origin: {
-                    x: (rect.left + rect.width / 2) / window.innerWidth,
-                    y: (rect.top + rect.height / 2) / window.innerHeight,
-                },
-            });
             setSaving(true);
 
             showToast(
@@ -192,14 +184,15 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
                     value={formInputs.goal.toString()}
                     setValue={setGoal}
                 />
-                <Button
+                <ConfettiButton
                     onClick={savePR}
                     disabled={saving}
+                    options={{ particleCount: 150, spread: 60 }}
                     className="w-full bg-secondary-background text-tertiary-text rounded-lg cursor-pointer text-xl  hover:bg-secondary-background-hover active:bg-secondary-background-hover font-bold p-7"
                 >
                     <Trophy className="size-5" />
                     Save PR
-                </Button>
+                </ConfettiButton>
             </div>
             <ToastContainer />
         </section>

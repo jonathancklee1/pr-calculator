@@ -54,7 +54,7 @@ export function RadialProgressChart({
                 />
                 <PolarAngleAxis
                     type="number"
-                    domain={[0, goal || 0]}
+                    domain={[0, goal || currentPR || 100]}
                     tick={false}
                 />
                 <PolarRadiusAxis

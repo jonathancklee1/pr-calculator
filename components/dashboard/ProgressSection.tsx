@@ -4,16 +4,28 @@ import { RadialProgressChart } from "./RadialProgressChart";
 import IconButton from "../atoms/IconButton";
 import { Dumbbell, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { usePrState } from "@/context/PrContext";
+import { ExerciseRecord } from "@/lib/types";
 
 function ProgressSection() {
     const { prs } = usePrState();
-    const exercise = getRandomRecord();
+    const [exercise, setExercise] = useState<ExerciseRecord | undefined>(
+        undefined,
+    );
+
+    // Picked once prs become available (post-hydration) and kept stable
+    // afterwards, so unrelated re-renders elsewhere in the app don't swap
+    // the displayed exercise out from under the user.
+    useEffect(() => {
+        if (prs.length === 0) return;
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setExercise(
+            (prev) => prev ?? prs[Math.floor(Math.random() * prs.length)],
+        );
+    }, [prs]);
 
     const router = useRouter();
-    function getRandomRecord() {
-        return prs[Math.floor(Math.random() * prs.length)];
-    }
     function addNewExercise() {
         router.push("/exercises");
     }
