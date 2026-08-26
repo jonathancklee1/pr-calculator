@@ -1,6 +1,6 @@
 "use client";
 import Card from "../atoms/Card";
-import Image from "next/image";
+import ExerciseImage from "../atoms/ExerciseImage";
 import Pill from "../atoms/Pill";
 import { usePrState } from "@/context/PrContext";
 
@@ -21,22 +21,13 @@ function PrList() {
                     <Card>
                         <div className="flex items-center justify-between gap-4">
                             <div className="flex items-center gap-4">
-                                {exercise?.gifUrl ? (
-                                    <Image
-                                        src={exercise?.gifUrl}
-                                        alt={exercise?.name || ""}
-                                        width={90}
-                                        height={90}
-                                        className="rounded-xl aspect-square object-cover"
-                                        unoptimized
-                                    />
-                                ) : (
-                                    <div className="flex items-center justify-center bg-tertiary-background rounded-md h-22.5">
-                                        <span className="text-secondary-text text-sm text-wrap text-center  w-22.5">
-                                            No image available
-                                        </span>
-                                    </div>
-                                )}
+                                <ExerciseImage
+                                    src={exercise?.gifUrl}
+                                    alt={exercise?.name || ""}
+                                    width={90}
+                                    height={90}
+                                    className="w-22.5 h-22.5 rounded-xl aspect-square object-cover"
+                                />
 
                                 <div className="flex flex-col gap-2">
                                     <h3 className="font-bold capitalize">

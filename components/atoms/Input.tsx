@@ -6,7 +6,7 @@ import {
     InputGroupAddon,
     InputGroupInput,
 } from "@/components/ui/input-group";
-import { ComponentProps, CSSProperties } from "react";
+import { ComponentProps, CSSProperties, useId } from "react";
 
 export function Input({
     isSearch,
@@ -19,13 +19,15 @@ export function Input({
     styles?: CSSProperties | string;
     inputProps: ComponentProps<"input">;
 }) {
+    const generatedId = useId();
+
     return (
         <Field className="max-w-sm ">
             <InputGroup
                 className={`w-full rounded-lg border border-border-color text-sm placeholder:text-secondary-text focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 py-5 ${styles}`}
             >
                 <InputGroupInput
-                    id="inline-start-input"
+                    id={generatedId}
                     placeholder={placeholder || "Search..."}
                     {...props}
                 />
