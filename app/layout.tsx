@@ -43,7 +43,9 @@ export default function RootLayout({
             <PrStateProvider>
                 <body className="min-h-screen flex flex-col">
                     <Navbar />
-                    <main>{children}</main>
+                    <main className="w-full max-w-[1440px] mx-auto">
+                        {children}
+                    </main>
                     <BottomNav />
                 </body>
             </PrStateProvider>
