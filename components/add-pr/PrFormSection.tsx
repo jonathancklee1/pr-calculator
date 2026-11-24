@@ -152,7 +152,7 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
     }
     return (
         <section className="mb-4">
-            <div className="relative w-full mb-4">
+            <div className="relative w-full md:max-w-3xl mx-auto mb-4">
                 <ExerciseImage
                     src={exercise.gifUrl}
                     width={500}
@@ -166,7 +166,7 @@ function PrFormSection({ exercise }: { exercise: ExerciseData }) {
                     {exercise.name}
                 </h2>
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 w-full md:max-w-3xl mx-auto">
                 <InputCard
                     label="Weight Lifted"
                     value={formInputs.weight.toString()}
